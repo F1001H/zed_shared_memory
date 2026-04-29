@@ -24,7 +24,7 @@ struct SHMHeader {
     uint64_t frame_count;
     int32_t active_buffer; 
     int32_t padding;
-    double joints[18];      // Placeholder for your ROS relay
+    double joints[18];
     uint64_t joint_timestamp;
 };
 #pragma pack(pop)
