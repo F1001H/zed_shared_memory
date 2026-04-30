@@ -89,7 +89,7 @@ public:
     }
 };
 
-int main() {
+int main(int argc, char** argv) {
     std::signal(SIGINT, signal_handler);
     using namespace boost::interprocess;
     
@@ -98,7 +98,16 @@ int main() {
     SHMHeader* header = static_cast<SHMHeader*>(region.get_address());
     const char* data_ptr = static_cast<const char*>(region.get_address()) + sizeof(SHMHeader);
 
-    AsyncWriter writer("dataset_capture.bin");
+    std::string filename = "dataset_capture.bin";
+
+    // Check if an argument was provided
+    if (argc > 1) {
+        filename = argv[1];
+    }
+
+    std::cout << "Recording to: " << filename << std::endl;
+
+    AsyncWriter writer(filename);
     
     // --- RELATIVE INDEXING SETUP ---
     // Capture the first frame count we see as our "Zero Point"
